@@ -1,5 +1,8 @@
 require 'webrick'
-Dir[File.dirname(__FILE__) + "/../controllers/**/*.rb"].each do |file|
-  puts "spec #{file}"
+
+Dir[File.dirname(__FILE__) + "/../app/**/*.rb"].each do |file|
   require file
 end
+
+include Medieval
+include Controllers
