@@ -1,4 +1,5 @@
 require File.expand_path('../../../spec_helper', __FILE__)
+require 'csv'
 
 Wrappers.describe Post do
   Wrappers.context "#new" do
@@ -26,5 +27,41 @@ Wrappers.describe Post do
       result = Post.new
       result.instance_variables.map{ |v| result.send(v.to_s[1..-1]) }.should_eq [nil, nil, nil]
     end
+  end
+
+  Wrappers.context "#find_all" do
+    Wrappers.it "returns empty array when there are no posts" do
+      result = Post.find_all
+      result.should_eq []
+    end
+  end
+
+  Wrappers.context "#save" do
+    Wrappers.it "saves the post in the file" do
+      post = Post.new title: "test post", body: "this is the body", author: "Brayan"
+      post.save
+
+      result = Post.find_all
+      result.count.should_eq 1
+    end
+
+    Wrappers.it "returns an array of Posts" do
+      result = Post.find_all
+      result[0].class.should_eq Post
+    end
+
+  end
+
+  Wrappers.context "#last_id" do
+    Wrappers.it "gets the last id" do
+      post = Post.new title: "test post", body: "this is the body", author: "Brayan"
+      post.save
+      Post.next_id.should_eq 3
+    end
+  end
+
+  file ||= Dir.pwd + "/app/posts/posts.csv"
+  CSV.open file, "wb" do |csv|
+    csv << ["id", "body", "title", "created_at", "author"]
   end
 end
