@@ -16,11 +16,26 @@
   </div>
   <div class='content'>
     <h1> New Entry </h1>
-    <form action='/posts/create' method='POST'>
-      <input name='author' type='text' placeholder='AUTHOR'/>
-      <input name='title' type='text' placeholder='TITLE'/>
-      <textarea name='body'></textarea>
-      <input type='submit' value='Create'/>
+    <form action='/posts/create' method='POST' class='form'>
+      <div class='field-group'>
+        <div class='controls-field'>
+          <input id='author' name='author' type='text' placeholder='AUTHOR'/>
+        </div>
+      </div>
+      <div class='field-group'>
+        <div class='controls-field'>
+          <input id='title' name='title' type='text' placeholder='TITLE'/>
+        </div>
+      </div>
+      <div class='field-group'>
+        <label for="">Post Body:</label>
+        <div class='controls-field'>
+          <textarea id='body'  name='body' rows='10'></textarea>
+        </div>
+      </div>
+      <div class='form-actions'>
+        <input type='submit' value='Create' class="button"/>
+      </div>
     </form>
   </div>
 </div>
