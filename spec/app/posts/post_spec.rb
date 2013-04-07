@@ -20,12 +20,12 @@ Wrappers.describe Post do
 
     Wrappers.it "creates a new post given more than one attribute" do
       result = Post.new title: "test post", body: "this is the body", author: "Brayan"
-      result.instance_variables.map{ |v| result.send(v.to_s[1..-1]) }.should_eq ["this is the body", "test post", "Brayan", 0, nil]
+      result.instance_variables.map{ |v| result.send(v.to_s[1..-1]) }.should_eq [0,"this is the body", "test post", "Brayan", nil]
     end
 
     Wrappers.it "creates a new post given no attributes" do
       result = Post.new
-      result.instance_variables.map{ |v| result.send(v.to_s[1..-1]) }.should_eq [nil, nil, nil, 0, nil]
+      result.instance_variables.map{ |v| result.send(v.to_s[1..-1]) }.should_eq [0, nil, nil, nil, nil]
     end
   end
 
@@ -69,6 +69,6 @@ Wrappers.describe Post do
 
   file ||= Dir.pwd + "/app/posts/posts.csv"
   CSV.open file, "wb" do |csv|
-    csv << ["id", "body", "title", "created_at", "author"]
+    csv << ["id", "body", "title", "author", "created_at"]
   end
 end

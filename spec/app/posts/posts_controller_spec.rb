@@ -45,6 +45,6 @@ Wrappers.describe PostsController do
 
   file ||= Dir.pwd + "/app/posts/posts.csv"
   CSV.open file, "wb" do |csv|
-    csv << ["id", "body", "title", "created_at", "author"]
+    csv << ["id", "body", "title", "author", "created_at"]
   end
 end
