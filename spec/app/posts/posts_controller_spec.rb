@@ -3,19 +3,25 @@ require File.expand_path('../../../spec_helper', __FILE__)
 Wrappers.describe PostsController do
   Wrappers.context "#index" do
     Wrappers.it "loads all the posts" do
-      post = PostsController
-      post.index
-      post.instance_variable_get("@posts".intern).should_eq []
+      PostsController.index
+      PostsController.instance_variable_get(:@posts).should_eq []
     end
   end
+
   Wrappers.context "#show" do
     Wrappers.it "finds the post" do
       post = Post.new title: "Test title", body: "test body", author: "Brayan"
       post.save
 
-      post = PostsController
-      post.show 1
-      post.instance_variable_get("@post".intern).instance_variables.map{ |v| result.send(v.to_s[1..-1]) }.should_eq [1,"test body", "Test title", "Brayan"]
+      PostsController.show 1
+
+      post_found = PostsController.instance_variable_get(:@post)
+      posts_controlller.index
+      post_found.id.should_eq Post.next_id - 1
+      post_found.title.should_eq post.title
+      post_found.body.should_eq post.body
+      post_found.author.should_eq post.author
+      post_found.created_at.to_date.should_eq Date.today
     end
   end
 

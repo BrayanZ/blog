@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <link href='/assets/css/application.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+  <div class='page'>
+    <div class='header'>
+      <a href="/">
+        <img class='logo' src='/assets/img/medieval_logo.png'>
+      </a>
+      <div class='menu'>
+        <ul>
+          <li><a href='/posts/new' class=button>New Entry</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class='content'>
+      <div class='post-show'>
+        <div class='title'>
+          <%= @post.title %>
+        </div>
+        <div class='post_body'>
+          <%= @post.body %>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>
