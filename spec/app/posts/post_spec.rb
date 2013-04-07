@@ -49,7 +49,6 @@ Wrappers.describe Post do
       result = Post.find_all
       result[0].class.should_eq Post
     end
-
   end
 
   Wrappers.context "#last_id" do
