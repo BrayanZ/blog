@@ -17,13 +17,43 @@
     <div class='content'>
       <div class='post-show'>
         <div class='title'>
-          <%= @post.title %>
+          <h1> <%= @post.title %> </h1>
         </div>
         <div class='post_body'>
           <%= @post.body %>
         </div>
       </div>
-    </div>
+      <div class='comments'>
+        <% @comments.each do |comment| %>
+          <div class='comment'>
+            <div class='author'>
+              <%= comment.author %>
+            </div>
+            <div class='body'>
+              <%= comment.body %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+        <h3>Leave a Comment</h3>
+        <form action='/comments/create' method='POST' class='form'>
+          <input type="hidden" name="post_id" id="post_id" value="<%= @post.id %>" />
+          <div class='field-group'>
+            <div class='controls-field'>
+              <input id='author' name='author' type='text' placeholder='AUTHOR'/>
+            </div>
+          </div>
+          <div class='field-group'>
+            <label for="">Comment:</label>
+            <div class='controls-field'>
+              <textarea id='body'  name='body' rows='10'></textarea>
+            </div>
+          </div>
+          <div class='form-actions'>
+            <input type='submit' value='Comment!' class="button"/>
+          </div>
+        </form>
+      </div>
   </div>
   </body>
 </html>
