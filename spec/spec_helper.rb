@@ -1,4 +1,5 @@
 require 'webrick'
+require 'csv'
 
 Dir[File.dirname(__FILE__) + "/../config/**/*.rb"].each do |file|
   require file
@@ -8,27 +9,35 @@ Dir[File.dirname(__FILE__) + "/../app/**/*.rb"].each do |file|
   require file
 end
 
-include Medieval
-include Controllers
+def with_clear_files
+  file_posts = Dir.pwd + "/app/posts/posts.csv"
+  file_comments = Dir.pwd + "/app/comments/comments.csv"
 
-class Model
-  def self.method_added name
-    if /hook/.match(name.to_s) or method_defined? "#{name}_without_hook"
-      return
+  content_posts = CSV.read(file_posts)
+  content_comments = CSV.read(file_comments)
+
+  CSV.open file_posts, "wb" do |csv|
+    csv << ["id", "body", "title", "author", "created_at"]
+  end
+
+  CSV.open file_comments, "wb" do |csv|
+    csv << ["id", "body", "author", "post_id", "created_at"]
+  end
+
+  yield
+
+  CSV.open file_posts, "wb" do |csv|
+    content_posts.each do |row|
+      csv << row
     end
-    hook = """
-    def #{name}_hook
-      p 'Method #{name} has been called'
-      #{name}_without_hook
+  end
+
+  CSV.open file_comments, "wb" do |csv|
+    content_comments.each do |row|
+      csv << row
     end
-    """
-
-    self.class_eval(hook)
-
-    alias1 = "alias #{name}_without_hook #{name}"
-    self.class_eval alias1
-
-    alias2 = "alias #{name} #{name}_hook"
-    self.class_eval alias2
   end
 end
+
+include Medieval
+include Controllers

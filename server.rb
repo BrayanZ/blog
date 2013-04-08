@@ -1,8 +1,9 @@
 require 'webrick'
 include WEBrick
 
-require './servlet/rest_servlet'
+Dir[File.dirname(__FILE__) + "/config/**/*.rb"].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/app/**/*.rb'].each {|file| require file }
+require './servlet/rest_servlet'
 
 
 dir = Dir::pwd
