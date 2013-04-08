@@ -30,12 +30,12 @@ Wrappers.describe Comment do
 
   Wrappers.context "#save" do
     Wrappers.it "saves the comment in the file" do
-      comment = Comment.new body: "this is the body", author: "Brayan",post_id: 1
+      comment = Comment.new body: "this is the body", author: "Zuniga",post_id: 1
       result =  comment.save
       (!result).should_eq false
     end
     Wrappers.it "saves the comment with the same values" do
-      comment = Comment.new body: "this is the body", author: "Brayan",post_id: 1
+      comment = Comment.new body: "this is the body", author: "Brayan",post_id: 3
       result =  comment.save
 
       result.body.should_eq comment.body
@@ -59,8 +59,24 @@ Wrappers.describe Comment do
 
       result.body.should_eq "this is the body"
       result.author.should_eq "Brayan"
-      result.post_id.should_eq 1
+      result.post_id.should_eq 3
       result.created_at.to_date.should_eq Date.today
+    end
+    Wrappers.it "finds the comments applying a filter" do
+      result = Comment.find_all post_id: 3
+
+      result.count.should_eq 1
+    end
+
+    Wrappers.it "finds the comments applying more than one filter" do
+      result = Comment.find_all post_id: 3, author: "Zuniga"
+
+      result.count.should_eq 0
+    end
+    Wrappers.it "finds the comments applying more than one filter" do
+      result = Comment.find_all post_id: 3, author: "Brayan"
+
+      result.count.should_eq 1
     end
   end
 

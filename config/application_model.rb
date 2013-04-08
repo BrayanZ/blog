@@ -17,14 +17,22 @@ class  ApplicationModel
     end
   end
 
-  def self.find_all
+  def self.find_all filters = {}
     result = Array.new
     class_name = self.to_s.downcase
     file = Dir.pwd + "/app/#{class_name}s/#{class_name}s.csv"
     CSV.foreach(file, {headers: true}) do |row|
       result << self.new(row.to_hash.symbolize_keys)
     end
-    result
+    filters.empty? ? result : self.apply_filter(result, filters)
+  end
+
+  def self.apply_filter results, criteria
+    filters = []
+    criteria.each do |field, constraint|
+      filters << "result.#{field} == #{constraint.inspect}"
+    end
+    results.select {|result| eval(filters.join(" and "))}
   end
 
   def self.find id
