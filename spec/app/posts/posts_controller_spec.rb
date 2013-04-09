@@ -13,7 +13,7 @@ with_clear_files do
       post = Post.new({title: "Test title", body: "test body", author: "Brayan"}).save
       comment1 = Comment.new({body: "first!! lol", author:"no-lifer", post_id: post.id}).save
       comment2 = Comment.new({body: "Thanks for the post ;)", author:"a friend", post_id: post.id}).save
-      PostsController.show post.id
+      PostsController.show id: post.id
 
       Wrappers.it "finds the post" do
         post_found = PostsController.instance_variable_get(:@post)
