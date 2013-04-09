@@ -23,11 +23,13 @@
           <%= @post.body %>
         </div>
       </div>
+      <%unless @comments.empty? %>
       <div class='comments'>
+        <h4>Comments:</h4>
         <% @comments.each do |comment| %>
           <div class='comment'>
             <div class='author'>
-              <%= comment.author %>
+              <%= comment.author %> says:
             </div>
             <div class='body'>
               <%= comment.body %>
@@ -35,6 +37,7 @@
           </div>
         <% end %>
       </div>
+    <%end%>
         <h3>Leave a Comment</h3>
         <form action='/comments/create' method='POST' class='form'>
           <input type="hidden" name="post_id" id="post_id" value="<%= @post.id %>" />

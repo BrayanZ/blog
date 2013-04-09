@@ -56,7 +56,7 @@ body {
   text-decoration: none;
 }
 
-.post {
+.post, .comment, .post-show .post_body {
   background-color: f5f0f0;
   border: 2px solid c44848;
   border-radius: 10px;
@@ -88,4 +88,11 @@ body {
   float: right;
   border-top: 2px solid #0a1491;
   padding: 5px 0 0 10px;
+}
+
+.comment .author {
+  font-weight: bold;
+}
+.comment .body {
+  padding-left: 20px;
 }

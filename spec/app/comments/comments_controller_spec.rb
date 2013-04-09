@@ -12,7 +12,7 @@ with_clear_files do
         result.created_at.to_date.should_eq Date.today
       end
       Wrappers::it "redirects to the post page" do
-        controller_result[:uri].should_eq "/posts/show/8"
+        controller_result[:uri].should_eq "/posts/8/show"
       end
     end
   end
