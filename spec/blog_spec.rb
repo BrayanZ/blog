@@ -27,4 +27,21 @@ describe 'A blog' do
       expect(blog.all_posts).not_to be_empty
     end
   end
+
+  context 'post_by_id' do
+    let(:post) {{ id: 1}}
+    blog = Blog.new(post)
+    before(:all){
+      post.stub(:id).and_return(post[:id])
+    }
+
+    it 'returns the post with the id' do
+      expect(blog.post_by_id(1)).to eq post
+    end
+
+    it "returns false when the post doesn't have a post with the id" do
+      expect(blog.post_by_id 2).to be_false
+
+    end
+  end
 end

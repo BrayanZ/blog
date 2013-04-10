@@ -19,6 +19,17 @@ describe 'HTTP-based blog engine' do
     end
   end
 
+  describe 'displaying the whole post' do
+    it 'shows all the blog content' do
+      post_id, post_title, post_body = 2, 'dummy title', 'dummy body'
+      post = Post.new id: post_id, title: post_title, body: post_body
+      @engine = BlogEngine.new( Blog.new(post) )
+      Thread.new { @engine.run }
+
+      expect(get('/posts/2/show')).to match /<h1.*>#{post_title}<\/h1>.*<p>#{post_body}<\/p>/m
+    end
+  end
+
   def get(url, port = 1504)
     sleep 0.1
     full_url = "http://127.0.0.1:#{port}#{url}"
