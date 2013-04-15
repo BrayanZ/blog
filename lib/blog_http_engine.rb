@@ -17,7 +17,7 @@ class BlogEngine
   end
 
   def mount_routes
-    @server.mount "/assets", HTTPServlet::FileHandler, './app/assets/'
+    @server.mount "/assets", HTTPServlet::FileHandler, './assets/'
     @server.mount '/', BlogServlet, @blog
     @server.mount '/posts', PostServlet, @blog
   end
