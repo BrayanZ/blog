@@ -29,18 +29,17 @@ describe 'A blog' do
   end
 
   context 'post_by_id' do
-    let(:post) {{ id: 1}}
-    blog = Blog.new(post)
-    before(:all){
-      post.stub(:id).and_return(post[:id])
-    }
+    let(:post_id) { 1 }
+    let(:post) { double(:post, id: post_id) }
+    let(:blog) { Blog.new post }
 
     it 'returns the post with the id' do
-      expect(blog.post_by_id(1)).to eq post
+      expect(blog.post_by_id(post_id)).to eq post
     end
 
     it "returns false when the post doesn't have a post with the id" do
-      expect(blog.post_by_id 2).to be_false
+      non_existing_post_id = 2
+      expect(blog.post_by_id non_existing_post_id).to be_false
 
     end
   end

@@ -12,9 +12,6 @@ class Blog
   end
 
   def post_by_id id
-    @posts.each do |post|
-      return post if post.id == id
-    end
-    return false
+    @posts.find{ |post| post.id == id }
   end
 end

@@ -8,11 +8,6 @@
       <a href="/">
         <img class='logo' src='/assets/img/medieval_logo.png'>
       </a>
-      <div class='menu'>
-        <ul>
-          <li><a href='/posts/new' class=button>New Entry</a></li>
-        </ul>
-      </div>
     </div>
     <div class='content'>
       <div class='posts'>
@@ -22,7 +17,7 @@
             <div class='post_body'>
               <%= post.body %>
             </div>
-            <a href='/posts/id' %>/show'> Read More </a>
+            <a href='/posts/<%= post.id%>/show'> Read More </a>
           </div>
         <% end %>
       </div>

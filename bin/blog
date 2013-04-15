@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+Dir[Dir.pwd + "/lib/*.rb"].each {|lib_file| require lib_file}
+
+def posts
+  @posts ||= []
+end
+
+Dir[Dir.pwd + "/posts/*.yml"].each_with_index { |post, id| posts << Post.create_from_file(post, id) }
+
+BlogEngine.new(Blog.new *posts).run

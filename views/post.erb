@@ -8,11 +8,6 @@
       <a href="/">
         <img class='logo' src='/assets/img/medieval_logo.png'>
       </a>
-      <div class='menu'>
-        <ul>
-          <li><a href='/posts/new' class=button>New Entry</a></li>
-        </ul>
-      </div>
     </div>
     <div class='content'>
       <div class='post-show'>
@@ -23,25 +18,7 @@
           <p><%= @post.body %></p>
         </div>
       </div>
-        <h3>Leave a Comment</h3>
-        <form action='/comments/create' method='POST' class='form'>
-          <input type="hidden" name="post_id" id="post_id" value="<%= @post.id %>" />
-          <div class='field-group'>
-            <div class='controls-field'>
-              <input id='author' name='author' type='text' placeholder='AUTHOR'/>
-            </div>
-          </div>
-          <div class='field-group'>
-            <label for="">Comment:</label>
-            <div class='controls-field'>
-              <textarea id='body'  name='body' rows='10'></textarea>
-            </div>
-          </div>
-          <div class='form-actions'>
-            <input type='submit' value='Comment!' class="button"/>
-          </div>
-        </form>
-      </div>
+    </div>
   </div>
   </body>
 </html>
