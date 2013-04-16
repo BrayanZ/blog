@@ -2,7 +2,7 @@ require 'yaml'
 class Post
   attr_reader :title, :body, :id
 
-  def initialize( title: "", body: '', id: 0)
+  def initialize(title: "", body: '', id: 0)
     @title, @body, @id = title, body, id.to_i
   end
 

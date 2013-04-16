@@ -1,57 +1,27 @@
 require 'net/http'
-require 'webrick'
-require 'erb'
+require 'sinatra/base'
 
-class BlogEngine
-  include WEBrick
+class BlogEngine < Sinatra::Base
+  set :views, Proc.new { Dir.pwd + "/views" }
+  set :public_folder, Dir.pwd + "/assets/"
 
   def initialize blog
+    super
     @blog = blog
   end
 
-  def run port = 1504
-    @server = HTTPServer.new Port: port
-    mount_routes
-    trap("INT") { @server.shutdown }
-    @server.start
+  def blog
+    @blog ||= settings.blog
   end
 
-  def mount_routes
-    @server.mount "/assets", HTTPServlet::FileHandler, './assets/'
-    @server.mount '/', BlogServlet, @blog
-    @server.mount '/posts', PostServlet, @blog
+  get '/' do
+    @posts = blog.all_posts
+    erb :blog
   end
 
-  def stop
-    @server.shutdown
+  get '/posts/:id/show' do
+    @post = blog.post_by_id params[:id].to_i
+    erb :post
   end
 
-  class HTTPServlet::AbstractServlet
-    def render_view view, variables
-      variables.each {|variable, value| instance_variable_set "@#{variable.to_s}", value }
-      ERB.new(File.read("views/#{view.to_s}.erb"), 0, "%<>").result binding
-    end
-  end
-
-  class BlogServlet < HTTPServlet::AbstractServlet
-    include WEBrick
-
-    def do_GET request, response
-      response.body = render_view(:blog, posts: @options[0].all_posts)
-      raise HTTPStatus::OK
-    end
-  end
-
-  class PostServlet < HTTPServlet::AbstractServlet
-    include WEBrick
-
-    def do_GET request, response
-      response.body = render_view(:post, post: @options[0].post_by_id(post_id_from_path(request.path)))
-      raise HTTPStatus::OK
-    end
-
-    def post_id_from_path path
-      path.split('/')[2].to_i
-    end
-  end
 end
