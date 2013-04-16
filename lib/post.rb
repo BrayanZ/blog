@@ -2,8 +2,8 @@ require 'yaml'
 class Post
   attr_reader :title, :body, :id
 
-  def initialize(title: "", body: '', id: 0)
-    @title, @body, @id = title, body, id.to_i
+  def initialize attrs
+    @title, @body, @id = attrs[:title], attrs[:body], attrs[:id].to_i
   end
 
   def self.create_from_file file, id = 0

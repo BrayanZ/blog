@@ -1,1 +1,1 @@
-web: bundle exec ruby "./bin/blog.rb" -p $PORT
+web: bundle exec ruby "./bin/blog" -p $PORT

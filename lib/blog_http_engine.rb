@@ -5,11 +5,6 @@ class BlogEngine < Sinatra::Base
   set :views, Proc.new { Dir.pwd + "/views" }
   set :public_folder, Dir.pwd + "/assets/"
 
-  def initialize blog
-    super
-    @blog = blog
-  end
-
   def blog
     @blog ||= settings.blog
   end
