@@ -15,8 +15,8 @@ class BlogEngine < Sinatra::Base
   end
 
   get '/posts/:id/show' do
-    @post = blog.post_by_id params[:id].to_i
-    erb :post
+    @post = blog.post_by_id params[:id]
+    @post.publicated_at < DateTime.now ? erb(:post) : raise(Sinatra::NotFound)
   end
 
 end

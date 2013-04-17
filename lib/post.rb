@@ -1,13 +1,17 @@
 require 'yaml'
 class Post
-  attr_reader :title, :body, :id
+  attr_reader :title, :body, :id, :publicated_at
 
   def initialize attrs
-    @title, @body, @id = attrs[:title], attrs[:body], attrs[:id].to_i
+    @title, @body, @id, @publicated_at = attrs[:title], attrs[:body], generate_id(attrs[:title]), DateTime.parse(attrs[:publicated_at])
   end
 
-  def self.create_from_file file, id = 0
+  def generate_id title
+    title.downcase.gsub(" ", "-")
+  end
+
+  def self.create_from_file file
    post = Hash[YAML.load_file(file).map {|key, value| [key.to_sym, value] }]
-   new post.merge({id: id})
+   new post
   end
 end

@@ -11,9 +11,15 @@ describe 'A blog' do
 
     context 'when ther are posts' do
       it 'returns them' do
-        post1, post2 = double(:post1), double(:post2)
+        post1, post2 = stub(:post, publicated_at: DateTime.now - 1), stub(:post, publicated_at: DateTime.now - 2)
         blog = Blog.new(post1, post2)
         expect(blog.all_posts).to have(2).items
+      end
+
+      it "doesn't include posts with publication Date after today" do
+        post1, post2, post_from_future = stub(:post, publicated_at: DateTime.now - 1), stub(:post, publicated_at: DateTime.now - 3), stub(:post, publicated_at: DateTime.now + 1)
+        blog = Blog.new(post1, post2, post_from_future)
+        expect(blog.all_posts).to eq [post1, post2]
       end
     end
   end
@@ -21,7 +27,7 @@ describe 'A blog' do
 
   context 'create a post' do
     it 'adds a post to the blog' do
-      post = double(:post)
+      post = stub(:post, publicated_at: DateTime.now - 2)
       blog = Blog.new
       blog.add_post post
       expect(blog.all_posts).not_to be_empty

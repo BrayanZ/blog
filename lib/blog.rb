@@ -4,7 +4,7 @@ class Blog
   end
 
   def all_posts
-    @posts
+    @posts.select { |post| post.publicated_at < DateTime.now }
   end
 
   def add_post(post)

@@ -6,7 +6,7 @@ def posts
   @posts ||= []
 end
 
-Dir[Dir.pwd + "/posts/*.yml"].each_with_index { |post, id| posts << Post.create_from_file(post, id) }
+Dir[Dir.pwd + "/posts/*.yml"].each { |post| posts << Post.create_from_file(post) }
 
 BlogEngine.set :blog, Blog.new(*posts)
 BlogEngine.run!
