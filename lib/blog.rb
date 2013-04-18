@@ -3,6 +3,10 @@ class Blog
     @posts = posts
   end
 
+  def search_post input
+    published_posts.select { |post| post.matches? input }
+  end
+
   def all_posts
     @posts.select { |post| post.published? }
   end

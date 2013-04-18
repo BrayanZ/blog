@@ -48,4 +48,21 @@ describe 'A blog' do
 
     end
   end
+
+  context 'search_post' do
+
+    it 'finds a post given matching in the title' do
+      post = stub :post,  matches?: true, published?: true
+      post2 = stub :post, matches?: false, published?: true
+      blog = Blog.new post, post2
+      expect( blog.search_post "title").to eq [post]
+    end
+
+    it 'finds more than one post' do
+      post = stub :post,  matches?: true, published?: true
+      post2 = stub :post, matches?: true, published?: true
+      blog = Blog.new post, post2
+      expect( blog.search_post "dummy").to eq [post, post2]
+    end
+  end
 end
