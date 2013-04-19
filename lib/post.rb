@@ -4,8 +4,8 @@ class Post
 
   def initialize attrs
     @title = attrs[:title]
-    @body = attrs[:body]
-    @publicated_at = DateTime.parse(attrs[:publicated_at])
+    @body = attrs[:body] || ""
+    @publicated_at = DateTime.parse(attrs[:publicated_at]) || DateTime.now
   end
 
   def matches? query
