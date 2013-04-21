@@ -2,6 +2,7 @@ require 'rack/test'
 require 'blog_http_engine'
 require 'blog'
 require 'post'
+require 'posts_rss'
 
 describe 'HTTP-based blog engine' do
   include Rack::Test::Methods
@@ -31,6 +32,32 @@ describe 'HTTP-based blog engine' do
 
       get('/posts/post_id/show')
       expect(last_response.body).to match /<h1.*>#{post_title}<\/h1>.*<p>#{post_body}<\/p>/m
+    end
+  end
+
+  describe 'displaying the rss feeds' do
+    it 'shows the rss feeds' do
+      post1_title, post2_title = 'dummy title1', 'dummy title2'
+      post1 = stub :post, title: post1_title, published?: true, body: "post 1", id: ""
+      post2 = stub :post, title: post2_title, published?: true, body: "post 2", id: ""
+      blog = Blog.new(post1, post2)
+      BlogEngine.set :blog, blog
+
+      get('/rss')
+      expect(last_response.body).to match /#{post1_title}.*#{post2_title}/m
+    end
+  end
+
+  describe 'displaying the rss feeds [second method]' do
+    it 'shows the rss feeds' do
+      post1_title, post2_title = 'dummy title1', 'dummy title2'
+      post1 = stub :post, title: post1_title, published?: true, body: "post 1", id: ""
+      post2 = stub :post, title: post2_title, published?: true, body: "post 2", id: ""
+      blog = Blog.new(post1, post2)
+      BlogEngine.set :blog, blog
+
+      get('/rss2')
+      expect(last_response.body).to match /#{post1_title}.*#{post2_title}/m
     end
   end
 end

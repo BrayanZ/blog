@@ -5,7 +5,7 @@ class Post
   def initialize attrs
     @title = attrs[:title]
     @body = attrs[:body] || ""
-    @publicated_at = DateTime.parse(attrs[:publicated_at]) || DateTime.now
+    @publicated_at = attrs[:publicated_at] ? DateTime.parse(attrs[:publicated_at]) : DateTime.now
   end
 
   def matches? query
@@ -22,6 +22,12 @@ class Post
 
   def self.create_from_file file
     new(post_data_from_file(file))
+  end
+
+  def rss_item_information item
+    item.link = "/posts/#{id}/show"
+    item.title = @title
+    item.updated = @publicated_at.to_s
   end
 
   private

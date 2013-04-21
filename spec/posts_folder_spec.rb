@@ -1,4 +1,4 @@
-require Dir.pwd + '/bin/blog'
+require Dir.pwd + '/lib/post_folder'
 
 describe 'posts folder' do
   let(:post_folder_path){ Dir.pwd + "/spec/test_posts/*.yml" }

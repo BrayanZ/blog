@@ -19,6 +19,16 @@ class BlogEngine < Sinatra::Base
     @post.nil? ? raise(Sinatra::NotFound) : erb(:post)
   end
 
+  get '/rss' do
+    content_type 'text/xml'
+    PostsRSS.new(blog).create_posts_feed.to_s
+  end
+
+  get '/rss2' do
+    content_type 'text/xml'
+    blog.rss.to_s
+  end
+
   post '/search' do
     @posts = blog.search_post params[:search]
     erb :search_results

@@ -1,4 +1,5 @@
 require 'blog'
+require 'post'
 
 describe 'A blog' do
   describe 'getting all the blog posts' do
@@ -63,6 +64,34 @@ describe 'A blog' do
       post2 = stub :post, matches?: true, published?: true
       blog = Blog.new post, post2
       expect( blog.search_post "dummy").to eq [post, post2]
+    end
+  end
+
+  context 'rss' do
+      let(:post1) { Post.new title: "dummy title 1", body: "dummy body 1" }
+      let(:post2) { Post.new title: "dummy title 2", body: "dummy body 2" }
+      let(:blog) { Blog.new post1, post2 }
+      let(:rss) { blog.rss }
+
+    it 'has an author'do
+      expect( rss.author.name.content ).to eq 'Brayan'
+    end
+
+    it 'has the update date'do
+      Time.stub(:now).and_return(Time.parse("April 15 1990"))
+      expect( rss.updated.content ).to eq Time.now
+    end
+
+    it 'has about'do
+      expect( rss.id.content ).to eq 'My own rss feed'
+    end
+
+    it 'has title'do
+      expect( rss.title.content ).to eq 'Blog Feed'
+    end
+
+    it "creates the rss' items" do
+      expect( rss.items.count ).to eq 2
     end
   end
 end
