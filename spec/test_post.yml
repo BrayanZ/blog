@@ -1,5 +1,6 @@
 title: dummy title
 publicated_at: 15 april 2013 03:15:00 pm
-body: >
+body: |
  this is the body
+ =====
  with more than one line

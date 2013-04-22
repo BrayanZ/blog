@@ -4,6 +4,6 @@ class PostFolder
   end
 
   def posts
-    Dir[@folder].map { |file| Post.create_from_file(file)}
+    Dir[@folder].map { |file| PostParser.post_from_file(file)}
   end
 end

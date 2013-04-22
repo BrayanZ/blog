@@ -21,7 +21,7 @@ describe 'a blog post' do
 
   it 'creates a new post from a YAML file' do
     post = Post.create_from_file Dir.pwd + "/spec/test_post.yml"
-    expect(post.body).to eq "this is the body with more than one line\n"
+    expect(post.body).to match /this is the body.* with more than one line/m
     expect(post.title).to eq "dummy title"
     expect(post.id).to eq "dummy-title"
     expect(post.publicated_at).to eq DateTime.parse "15 april 2013 03:15:00 pm"

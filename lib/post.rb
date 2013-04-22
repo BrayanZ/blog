@@ -1,3 +1,4 @@
+require 'kramdown'
 require 'yaml'
 class Post
   attr_reader :title, :body, :publicated_at
@@ -44,7 +45,9 @@ class Post
   end
 
   def self.post_data_from_file(file)
-    symbolize_keys(Hash[YAML.load_file(file)])
+    data = symbolize_keys(Hash[YAML.load_file(file)])
+    data[:body] = Kramdown::Document.new(data[:body]).to_html
+    data
   end
 
   def self.symbolize_keys(hash)
